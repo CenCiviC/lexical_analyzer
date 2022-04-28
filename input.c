@@ -1,4 +1,1 @@
-int func(int a){
-    if(a == 3) return 1;
-    else return 0;
-}
+int main(){char if123="1";int 0a=a+-1;return -0;}
