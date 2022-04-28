@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "xtree": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "set": "cpp",
+        "utility": "cpp",
+        "map": "cpp",
+        "xstddef": "cpp",
+        "atomic": "cpp",
+        "istream": "cpp",
+        "xlocale": "cpp",
+        "xlocnum": "cpp"
+    }
+}

@@ -284,7 +284,7 @@ void constructDfa() {
         ptrIntegerDfa->addTransition(2, i, 2);
     }
     for (char i = '1'; i <= '9'; i++) {
-        ptrIntegerDfa->addTransition(0, i, 1);
+        ptrIntegerDfa->addTransition(0, i, 2);
     }
 
     for (char i = '1'; i <= '9'; i++) {
@@ -420,9 +420,18 @@ void scanner(char input_char) {
         curDfa = *curDfaCandidate.begin();
         break;
 
-    // 만족하는 dfa가 여러 개일 때      
+        // 만족하는 dfa가 여러 개일 때      
     default:
         column += 1;
+        if (input_char == '-') {
+            if (*curDfaCandidate.begin() == ptrArithmeticDfa && *curDfaCandidate.rbegin() == ptrIntegerDfa) {
+                if (curDfa == ptrIdentifierDfa || curDfa == ptrIntegerDfa) {
+                    curDfa = ptrArithmeticDfa;
+                    ptrIntegerDfa->setFlag();
+                    break;
+                }
+            }
+        }// - handling
         curDfa = *curDfaCandidate.begin();// 여러 개 중에서 우선순위가 높은 dfa 선택
         break;
     }
