@@ -9,6 +9,7 @@
 
 using namespace std;
 ofstream file_output("output.txt"); //output file
+vector<char> outputTokenLexeme;
 
 class dfa {
 public:
@@ -83,18 +84,16 @@ public:
     }//dfa의 변수를 초기화
 
     void makeLexemes() {
-        cout << dfaName << " ";
-        for (char ch : lexemes) {
-            cout << ch;
+        for(char ch : dfaName){
+            outputTokenLexeme.push_back(ch);
         }
-        cout << endl;
+        outputTokenLexeme.push_back('\n');
 
-        file_output << dfaName << endl;
         for (char ch : lexemes) {
-            file_output << ch;
+            outputTokenLexeme.push_back(ch);
         }
-        file_output << '\n' << endl;
-    }//dfa에 들어있는 lexeme 출력
+        outputTokenLexeme.push_back('\n');
+    }//dfa에 들어있는 보관
 
     bool checkDfa(char ch) {
         transition(curState, ch);
@@ -372,7 +371,7 @@ void check_invalid_value(char input_char) {
     }
 
     if (invalidValue) {
-        cout << "input value is invalid value" << "\nline :" << line << "   column :" << column;
+        file_output << "input value is invalid value" << "\nline :" << line << "   column :" << column;
         exit(0);
     }
 }
@@ -401,7 +400,7 @@ void scanner(char input_char) {
         }
 
         else {
-            cout << "error! dfa doesn't exist" << "\nline :" << line << " column :" << column; // 만족하는 dfa가 존재하지 않는 경우
+            file_output << "error! dfa doesn't exist" << "\nline :" << line << " column :" << column; // 만족하는 dfa가 존재하지 않는 경우
             exit(0);
         }
         break;
@@ -443,7 +442,7 @@ int main(int argc, char* argv[]) {
     ifstream readFile(fileName);
 
     if (readFile.fail()) {
-        cout << "Can't make output file" << endl;
+        file_output << "Can't make output file" << endl;
         exit(0);
     }
 
@@ -457,6 +456,9 @@ int main(int argc, char* argv[]) {
         if (curDfa->finalState()) curDfa->makeLexemes();
     }
 
+    for (char ch : outputTokenLexeme) {
+        file_output << ch;
+    }
     readFile.close();
     file_output.close();
 }
